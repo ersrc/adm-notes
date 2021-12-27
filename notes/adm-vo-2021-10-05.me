@@ -1,0 +1,396 @@
+.ds theoremname Satz
+.ds lemmaname Lemma
+.ds corollaryname Beobachtung
+.ds proofname Beweis
+.ds examplename Beispiel
+
+.so lent-macros/lent-me.lmac
+.so lent-macros/math-me.lmac
+.so lent-macros/eqn.lmac
+.so lent-macros/pic.lmac
+
+.hla den
+
+.fo ''%''
+
+.(l C
+.b "ADM-MITSCHRIFT"
+.sp
+Vorlesung vom 05.10.2021
+.(l
+
+.uh "Natürliche Zahlen"
+
+.EQ
+NN = setrost6(0, 1, 2, 3, 4, ...)
+.EN
+
+.lp
+Jede natürliche Zahl $n$ hat einen Nachfolger, genannt $n'$, $s(n)$ oder $n + 1$.
+
+.PS 4
+
+nline(4)
+
+move down right 1;
+
+"= $0'$"; move right 1;
+"= $1'$"; move right 1;
+"= $2'$"; move right 1;
+"$...$"
+
+move down left 2;
+
+"$= (0')'$"; move right 1;
+"$= (1')'$"; move right 1;
+
+move down left 1;
+
+"$= ((0')')'$";
+
+.PE
+
+.uh "Peano-Axiome:"
+
+.bu
+$0$ ist eine natürliche Zahl
+
+.bu
+Jede natürliche Zahl $n$ besitzt (genau) einen Nachfolger $n'$
+
+.bu
+$0$ tritt nicht als Nachfolger einer natürlichen Zahl auf
+
+Somit nicht möglich:
+
+.PS
+
+define lnode { circle $1 above rjust fill 1 rad 0.03; }
+define rnode { circle $1 above ljust fill 1 rad 0.03; }
+
+N0: lnode("$0 = 1' = (0')'$")
+
+move right 2;
+
+N1: rnode("$1 = 0'$")
+
+arc from N0 to N1 rad 3 ->;
+arc from N1 to N0 rad 3 ->;
+
+line outline "grey" dashed from N0 - 0, 0.5 to N1 + 0,0.5;
+line outline "grey" dashed from N0 + 0, 0.5 to N1 - 0,0.5;
+
+.PE
+
+.bu
+Verschiedene natürliche Zahlen besitzen verschiedene Nachfolger
+
+.EQ
+n != m Rarr n' != m'
+.EN
+
+Somit nicht möglich:
+
+.PS 4
+
+define node { circle $1 above fill 1 rad 0.03; }
+
+A0: node("$0$")
+
+move right 1;
+
+A1: node("$1$")
+
+move right 1;
+
+A2: node("$2$")
+
+arrow from A0 to A1;
+arrow from A1 to A2;
+
+arc from A2 to A1 cw ->;
+
+move to A2 then right 1;
+
+B0: node("$0$")
+
+move right 1;
+
+B1: node("$1$")
+
+move right 1;
+
+B2: node("$2$")
+
+move right 1;
+
+B3: node("$3$")
+
+move to B0 then down 0.5;
+
+BT0: node("$0 tilde$")
+
+move right 1;
+
+BT1: node("$1 tilde$")
+
+move right 1;
+
+BT2: node("$2 tilde$")
+
+arrow from B0 to B1;
+arrow from B1 to B2;
+arrow from B2 to B3;
+
+arrow from BT0 to BT1;
+arrow from BT1 to BT2;
+arrow from BT2 to B3;
+
+line outline "grey" dashed from A0 + 0, 0.5 to A2 - 0, 0.5;
+line outline "grey" dashed from A0 - 0, 0.5 to A2 + 0, 0.5;
+
+line outline "grey" dashed from B0 + 0, 0.25 to B3 - 0, 0.75;
+line outline "grey" dashed from B0 - 0, 0.75 to B3 + 0, 0.25;
+
+.PE
+
+.bu
+.b "Induktionsaxiom:"
+
+.lp
+Wenn $0$ diese Eigenschaft besitzt und wenn sich diese Eigenschaft für
+jede natürliche Zahl $n$ auf den Nachfolger ($n'$) überträgt, dann gilt, dass
+alle natürlichen Zahlen diese Eigenschaft besitzen.
+
+.lp
+.i "Legt die Eindeutigkeit der natürlichen Zahlen fest, d.h. es ist nicht möglich:"
+
+.PS
+
+nline(3)
+
+move down 1;
+
+sline(3)
+
+move down 0.2;
+
+Begin: "$0 tilde$";
+
+move right 1;
+
+"$1 tilde$";
+
+move right 1;
+
+"$2 tilde$";
+
+move right 1;
+
+End: "$3 tilde$";
+
+line outline "grey" dashed from Begin + 0, 0.5 to End - 0, 0.2;
+line outline "grey" dashed from Begin - 0, 0.2 to End + 0, 0.5;
+
+.PE
+
+.(q
+Es gibt 
+.b keine 
+"duale Welt", in der zwei oder mehr verschiedene Zahlenstrahlen
+existieren, die die natürlichen Zahlen beschreiben.
+.)q
+
+.lp
+Das
+.b Induktionsaxiom
+ist Grundlage für Beweistechnik
+.b "\[dq]Vollständige Induktion\[dq]" ":"
+
+.XPS "für vollständige Induktion" "Gaußsche Summenformel"
+
+.EQ
+sum from k=0 to n k = n(n+1) over 2
+.EN
+
+.THS "\*[nospace]" "Vollständige Induktion"
+
+.PS
+
+boxht = 0.3
+
+IA: box wid 0.5 invis "$P(0)$";
+
+box invis wid 0.3 "$and$";
+
+ISS: box invis "$forall n isin NN : ($";
+
+IV: box invis wid 0.5 "$P(n)$";
+
+box invis wid 0.3 "$Rarr$";
+
+IB: box invis wid 0.7 "$P(n + 1)$";
+
+ISE: box invis wid 1.25 "$) Rarr forall n isin NN : P(n)$"
+
+hbbracket(IA.sw, IA.se)
+
+"Induktionsanfang" at IA.s - 0, 0.2;
+
+hbbracket(ISS.sw, ISE.sw + (0.1, 0))
+
+"Induktionsschritt" at IB.s - 0.7, 0.2;
+
+habracket(IV.nw, IV.ne)
+
+"Induktionsvoraussetzung" at IV.n + -0.4, 0.2;
+
+habracket(IB.ne, IB.nw)
+
+"Induktionsbehauptung" at IB.n + 0.1, 0.2;
+
+reset boxht
+
+.PE
+
+.THE
+
+Weiter mit obigem Beispiel:
+
+.u "Induktionsanfang (IA):"
+
+.EQ I
+P(0): sum from k=0 to 0 k mark = 0(n+1) over 2
+.EN
+
+.EQ I
+0 lineup = 0 ~~~~ rarr roman "ok, w.A."
+.EN
+
+.u "Induktionsschritt (IS):"
+
+.EQ I
+P(n) Rarr P(n + 1)
+.EN
+
+.EQ I
+roman "IB": sum from k=0 to n+1 k mark = (n+1)(n+2) over 2
+~~~~ roman "(ist zu zeigen (z.z.))"
+.EN
+
+.EQ I
+roman "IS": sum from k=0 to n+1 k lineup = 0 + 1 + 2 + ...
+.EN
+
+.EQ I
+sum from k=0 to n k + (n + 1) ~~~~ lineup pile { size -3 { roman "IV anwenden für" sum from k=0 to n k } above = } ~~~~ n(n+1) over 2 mul (n+1)
+.EN
+
+.lp
+Umformen:
+
+.EQ I
+n+1 over 2 mul (n + 2) lineup = { (n + 1) mul (n + 2) } over 2 ~~~~ roman "ok, w.A."
+.EN
+
+.XPE
+
+.u "Direkter Beweis:"
+
+.PS 3
+
+boxht = 1;
+
+box shaded "grey" wid 4;
+"$n$" at last box.w - 0.2, 0;
+box wid 1 with.sw at last box.se;
+
+Left: box shaded "grey" wid 3 with .nw at 2nd last box.sw;
+"$...$" at last box.w - 0.2, 0;
+box wid 2 with.sw at last box.se;
+
+box shaded "grey" wid 2 with .nw at 2nd last box.sw;
+"$2$" at last box.w - 0.2, 0;
+Right: box wid 3 with.sw at last box.se;
+
+box shaded "grey" wid 1 with .nw at 2nd last box.sw;
+"$1$" at last box.w - 0.2, 0;
+box wid 4 with.sw at last box.se;
+
+hbbracket(2nd last box.sw - (0, 0.1), last box.se - (0, 0.1))
+
+"$n + 1$" at 1/2 <2nd last box.sw, last box.se> - (0, 0.4);
+
+line from Left up 1 left 2.5;
+
+"$sum from k=0 to n k$" rjust;
+
+line from Right up 1 right 2.5;
+
+"$sum from k=0 to n k$" ljust;
+
+reset boxht;
+
+.PE
+
+Aus Skizze:
+
+.EQ I
+2 mul sum from k=0 to n k mark = n mul (n+1)
+.EN
+
+.EQ I
+Harr sum from k=0 to n k lineup = { n mul (n+1) } over 2
+.EN
+
+.XPS "(zusätzlich)" "Vollst. Induktion"
+
+.EQ
+P(n): sum from k=0 to n k sup 2 = { n mul (n + 1) mul (2n + 1) } over 6
+.EN
+
+.lp
+Beweis per vollst. Induktion:
+
+.EQ I
+roman "IA": P(0) rarr 0 = 0 roman "ok, w.A."
+.EN
+
+.EQ I
+roman "IS": P(n) Rarr P(n + 1)
+.EN
+
+.EQ I
+roman "IB": P(n + 1) rarr sum from k sup 2 = { (n + 1) mul (n + 2) mul (2n + 3) } over 6
+.EN
+
+.EQ I
+sum from k=0 to n+1 k sup 2 mark = sum from k=0 to n k sup 2 + (n + 1) sup 2
+.EN
+
+.EQ I
+lineup pile { size -3 { roman "IV anwenden" } above = } ~~~~ { n mul (n + 1) mul (2n + 1) } over 6 + (n + 1) sup 2
+.EN
+
+.lp
+Umformen:
+
+.EQ I
+lineup = { (n + 1) } over 6 (n (2n + 1) + 6 (n + 1))
+.EN
+
+.EQ I
+lineup = { (n + 1) } over 6 (2 n sup 2 + n + 6n + 6)
+.EN
+
+.EQ I
+lineup = { (n + 1) } over 6 (2 n sup 2 + 7n + 6)
+.EN
+
+.EQ I
+lineup = { (n + 1) } over 6 mul (n + 2) (2n + 3) ~~~~ roman "ok"
+.EN
+
+.XPE
+
+.MISS "Fehlerhaftes Beispiel, Verschieben von Anfangsindex, rekursive Definition von Folgen"
