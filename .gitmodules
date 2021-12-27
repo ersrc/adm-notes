@@ -1,0 +1,3 @@
+[submodule "notes/lent-macros"]
+	path = notes/lent-macros
+	url = https://github.com/ersrc/lent-macros.git
