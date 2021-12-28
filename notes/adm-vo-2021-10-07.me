@@ -1,0 +1,444 @@
+.so lent-macros/lent-me.lmac
+.so lent-macros/math-me.lmac
+.so lent-macros/eqn.lmac
+.so lent-macros/pic.lmac
+
+.so config.me
+
+.(l C
+.b "ADM-MITSCHRIFT"
+.sp
+Vorlesung vom 07.10.2021
+.(l
+
+.uh "Vollständige Induktion:"
+
+.PS
+
+boxht = 0.3
+
+IA: box wid 0.5 invis "$P(0)$";
+
+box invis wid 0.3 "$and$";
+
+ISS: box invis "$forall n isin NN : ($";
+
+IV: box invis wid 0.5 "$P(n)$";
+
+box invis wid 0.3 "$Rarr$";
+
+IB: box invis wid 0.7 "$P(n + 1)$";
+
+ISE: box invis wid 1.25 "$) Rarr forall n isin NN : P(n)$"
+
+hbbracket(IA.sw, IA.se)
+
+"Induktionsanfang" at IA.s - 0, 0.2;
+
+hbbracket(ISS.sw, ISE.sw + (0.1, 0))
+
+"Induktionsschritt" at IB.s - 0.7, 0.2;
+
+habracket(IV.nw, IV.ne)
+
+"Induktionsvoraussetzung" at IV.n + -0.4, 0.2;
+
+habracket(IB.ne, IB.nw)
+
+"Induktionsbehauptung" at IB.n + 0.1, 0.2;
+
+reset boxht
+
+.PE
+
+.lp
+Varianten:
+
+.bu
+Verschieben des Induktionsanfangs
+
+.bu
+Zurückgreifen auf alle vorangegangenen Werte
+
+.EQ
+P(0) and ( forall n isin NN : ( forall k <= n : P(k) ) Rarr P(n + 1)) Rarr forall n isin NN : P(n)
+.EN
+
+.XPS "\*[nospace]" ""
+
+.EQ
+{ ( a sub n ) } sub {n >= 0} roman " ist Folge"
+.EN
+
+.lp
+rekursive Definition:
+
+.EQ
+a sub 0 = 1
+.EN
+
+.EQ
+a sub n+1 = a sub 0 + a sub 1 + a sub 2 + ... + a sub n = sum from k=0 to n a sub k
+.EN
+
+.TS
+center delim($$);
+C|C|C|C|C|C|C.
+$n$	0	1	2	3	4	5
+_
+$a sub n$	1	1	2	4	8	16
+.TE
+
+.lp
+Vermutung:
+
+.EQ
+a sub n = 2 sup n-1 roman " für " n >= 1
+.EN
+
+.lp
+Beweis per vollst. Induktion:
+
+.EQ I
+roman "IA": P(1) rarr a sub 1 = 1 = 2 sup 1-1 = 2 sup 0 = 1 ~~~~ roman "ok, w.A."
+.EN
+
+.EQ I
+roman "IS": P(1), P(2), ... , P(n) Rarr P(n + 1)
+.EN
+
+.EQ I
+roman "IB": a sub n+1 = 2 sup (n+1)-1 = 2 sup n ( roman "z.z" )
+.EN
+
+.EQ I
+a sub n+1 mark pile { size -3 {rek. Def} above = } a sub 0 + a sub 1 + a sub 2 + ... + a sub n
+.EN
+
+.EQ I
+lineup pile { size -3 {IV anwenden} above = } 1 + 2 sup 0 + 2 sup 1 + ... + 2 sup n-1
+.EN
+
+.EQ I
+lineup = 1 + sum from k=0 to n-1 2 sup k
+.EN
+
+.u Anmerkung:
+
+.EQ
+sum from k=0 to n q sup k = { q sup n+1 -1 } over q-1 ~~~~ (q != 1)
+.EN
+
+.hl
+
+.EQ I
+lineup = 1 + { 2 sup n - 1 } over { 2 - 1 }
+.EN
+
+.EQ I
+lineup = 1 + 2 sup n - 1 = 2 sup n ~~~~ roman "ok"
+.EN
+
+.XPE
+
+.THS "\*[nospace]" ""
+
+.lp
+Jede natürliche Zahl $n >= 2$ lässt sich als Produkt von Primzahlen darstellen.
+.i "(In dem Fall ist auch nur ein Faktor auch ein Produkt)"
+
+.THE
+
+.DFS "\*[nospace]" "Primzahl"
+
+.EQ
+define PP 'fat roman "P"'
+
+p roman " Primzahl " Harr p = a mul b Rarr a = p or b = p ~~~~ roman "mit " r >= 2
+.EN
+
+.EQ
+PP = setrost5(2, 3, 5, 7, ...) ~~~~ roman "Menge der Primzahlen"
+.EN
+
+.DFE
+
+.PRS "\*[nospace]" ""
+
+.EQ I
+roman "IA": P(2) Rarr 2 = 2 isin PP
+.EN
+
+.EQ I
+roman "IS": P(2), ... , P(n) Rarr P(n + 1)
+.EN
+
+.lp
+2 Fälle:
+
+.ip "Fall 1:"
+$n + 1$ ist eine Primzahl: $n + 1 = n + 1 isin PP ~~~~ roman "ok"$
+
+.ip "Fall 2:"
+$n + 1$ ist keine Primzahl: 
+
+.EQ I
+Rarr exists a, b isin NN roman " mit " a, b != n + 1 and a, b != 1
+.EN
+
+.EQ I
+roman "und " n + 1 = a mul b ~~~~ ( Rarr roman " per Induktionsvoraussetzung")
+.EN
+
+da:
+
+.EQ I
+2 <= a, b <= n
+.EN
+
+.EQ I
+Rarr roman " IV " P(a), P(b)
+.EN
+
+daher:
+
+.EQ I
+a = prod from i=1 to k p sub i ~~~~ ~~~~ b = prod from j=1 to l p sub j
+.EN
+
+$Rarr n + 1 = a mul b = ( prod from i=1 to k p sub i ) mul ( prod from j=1 to l p sub j ) ~~~~ roman "ok"$
+
+.PRE
+
+.PS
+
+nline(5)
+
+move left 0.5;
+
+"$NN :$";
+
+.PE
+
+.lp
+natürliche Ordnung auf $NN$:
+
+.(l C
+$m < n rarr$ m kommt vor n
+$m <= n$
+.)l
+
+.lp
+.b "Rechnen mit natürlichen Zahlen"
+
+.ip "$+$"
+Addition
+
+.lp
+rekursive Definition:
+
+.EQ
+m + 0 mark := m
+.EN
+
+.EQ
+0 + M lineup := m
+.EN
+
+.EQ
+m + k' lineup := (m + k)'
+.EN
+
+.EQ
+k' + m lineup := (m + k)'
+.EN
+
+.ip "$mul$"
+Multiplikation
+
+.lp
+rekursive Definition:
+
+.EQ
+m mul 1 mark := m
+.EN
+
+.EQ
+1 mul m lineup := m
+.EN
+
+.EQ
+m mul k' = (m mul (k + 1)) lineup := k mul m + m
+.EN
+
+.EQ
+k' mul m lineup := k mul m + m
+.EN
+
+.lp
+Eigenschaften von $+$, $mul$:
+
+.bu
+Kommutativität
+
+.EQ I
+forall m, n isin NN: m + n mark = n + m
+.EN
+
+.EQ I
+m mul n lineup = n mul m
+.EN
+
+.bu
+Assoziativität
+
+.EQ I
+forall k, m, n isin NN: (k + m) + n mark = k + (m + n)
+.EN
+
+.EQ I
+(k mul m) mul n lineup = k mul (m mul n)
+.EN
+
+$rarr$ Auswertungsreihenfolge egal, 
+Klammern können deshalb weggelassen werden
+
+.bu
+Distributivität
+
+.EQ I
+forall k, m, n: (k + m) mul n mark = k mul n + m mul n
+.EN
+
+.EQ I
+n mul (k + m) lineup = n mul k + n mul m
+.EN
+
+.bu
+Existenz von neurtralen Elementen
+
+.EQ I
+0 roman " ist das neutrale Element von " + ~~ 
+left { rpile {m+0=m above 0+m=m} 
+.EN
+
+.EQ I
+1 roman " ist das neutrale Element von " mul ~~ 
+left { rpile {m mul 1=m above 1 mul m =m} 
+.EN
+
+.2c
+
+.lp
+.b "Subtraktion ..."
+
+$n + x = m rarr$ Lösen dieser Gleichung ist Subtraktion
+
+.lp
+Falls $x isin NN$ existiert, dann heißt dieses $x = m - n$ die
+Differenz von $m$ & $n$ (geht für $n <= m$).
+
+.PS
+Start: Here
+
+hbbracket(Start - (1, 0), Start + (1, 0))
+.PE
+
+.lp
+.ce
+führt zu ganzen Zahlen
+
+.bc
+
+.lp
+.b "und Division?"
+
+$n mul y = m rarr$ Lösen dieser Gleichung ist Division
+
+.lp
+Falls $y isin NN$ existiert, dann heißt dieses $y = m over n$ der
+Quotient von $m$ & $n$.
+
+.PS
+Start: Here
+
+hbbracket(Start - (1, 0), Start + (1, 0))
+.PE
+
+.lp
+.ce
+führt zu rationalen Zahlen
+
+.1c
+
+.uh "Ganze Zahlen"
+
+.PS 3
+sline(5)
+
+move down 0.3;
+
+"$...$";
+
+move right 1;
+
+"$-2$";
+
+move right 1;
+
+"$-1$";
+
+move right 1;
+
+"$0$";
+
+move right 1;
+
+"$1$";
+
+move right 1;
+
+"$...$";
+
+.PE
+
+.lp
+Zahlenmenge so erweitern, dass jede Zahl auch immer einen Vorgänger hat:
+
+.EQ
+ZZ = setrost7( ... , -2, -1, 0, 1, 2, ... )
+.EN
+
+.lp
+Für alle $n isin NN$ wird das Negative von $n$ definiert als: $-n$.
+
+.lp
+Natürliche Ordnung exisitert auch auf $ZZ$.
+
+.lp
+Addition für $ZZ$:
+
+.EQ I
+(-m) + (-n) = -(m + n) ~~~~ roman "für " m, n isin ZZ
+.EN
+
+.EQ I
+m + (-n) = m - n ~~~~ roman "für " n <= m
+.EN
+
+.EQ I
+m + (-n) = -(n - m) ~~~~ roman "für " n > m
+.EN
+
+.lp
+Subtraktion für $ZZ$:
+
+.EQ I
+m - n := m + (-n)
+.EN
+
+.lp
+$Rarr - $ in $ZZ$ kann uneingeschränkt durchgeführt werden.
+
+.lp
+Die ganzen Zahlen haben jedoch, im Vergleich zu $NN$, keinen Anfang.
